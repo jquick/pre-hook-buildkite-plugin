@@ -7,14 +7,13 @@ This Plugin runs a set of commands as bash script as a pre-hook. This is useful 
 ```yml
 steps:
   - plugins:
-    - jquick/pre-hook#v1.0:
+    - jquick/pre-hook#v1.0.0:
       commands:
-      - cd ${BUILDKITE_BUILD_CHECKOUT_PATH}
-      - export MY_ENV=1234
-      - >
-        if [[ -z $ENV ]]; than
+        - export MY_ENV=1234
+        - |-
+          if [[ -z $ENV ]]; than
             export MY_NEW_ENV=456
-        fi
+          fi
 ```
 
 ## Configuration
