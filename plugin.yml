@@ -1,0 +1,8 @@
+name: Pre Hook
+description: Run commands as a pre-hook
+author: https://github.com/jquick
+configuration:
+  properties:
+    commands:
+      type: [ string, array ]
+  additionalProperties: false
