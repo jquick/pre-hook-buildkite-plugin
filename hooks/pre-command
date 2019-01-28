@@ -21,17 +21,35 @@ function plugin_read_list_into_result() {
 
   [[ ${#result[@]} -gt 0 ]] || return 1
 }
-plugin_read_list_into_result BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS
 
-tmpdir=$(mktemp -d)
-file="${tmpdir}/${BUILDKITE_BUILD_NUMBER}-buildkite_prehook.sh"
-printf "%s\n" "${result[@]}" > ${file}
+function run() {
+  file="$1"
+  echo "writing pre-hook to ${file}"
+  echo
+  echo "### executing pre-hook script: ###"
+  cat ${file}
+  echo "### script end: ###"
+  echo
 
-echo "writing pre-hook to ${file}"
-echo
-echo "### executing pre-hook script: ###"
-cat ${file}
-echo "### script end: ###"
-echo
+  . ${file}
+}
 
-. ${file}
+file=""
+# Parse and run commands as a script
+if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS_0:-}" ]]; then
+  plugin_read_list_into_result BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS 
+
+  tmpdir=$(mktemp -d)
+  file="${tmpdir}/${BUILDKITE_BUILD_NUMBER}-buildkite_prehook.sh"
+  printf "%s\n" "${result[@]}" > ${file}
+  run "$file"
+fi
+
+if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT:-}" ]]; then
+  if [[ ${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT:0:1} == "/" ]]; then
+    file=${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT}
+  else
+    file="${BUILDKITE_BUILD_CHECKOUT_PATH}/${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT}"
+  fi
+  run "$file"
+fi

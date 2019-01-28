@@ -1,0 +1,1 @@
+export BUILD_STATUS=100
