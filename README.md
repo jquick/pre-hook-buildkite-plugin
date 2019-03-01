@@ -2,7 +2,7 @@
 
 This Plugin runs a set of commands as bash script as a pre-hook. This is useful when you use docker-compose on steps to set env's with a pre-hook.
 
-*current version* v1.1.0
+*current version* v1.2.0
 
 ## Usage:
 
