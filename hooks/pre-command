@@ -35,8 +35,19 @@ function run() {
 }
 
 file=""
+
+# Parse and run command as a script
+if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMAND:-}" ]]; then
+  plugin_read_list_into_result BUILDKITE_PLUGIN_PRE_HOOK_COMMAND
+
+  tmpdir=$(mktemp -d)
+  file="${tmpdir}/${BUILDKITE_BUILD_NUMBER}-buildkite_prehook.sh"
+  printf "%s\n" "${result[@]}" > ${file}
+  run "$file"
+fi
+
 # Parse and run commands as a script
-if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS_0:-}" ]]; then
+if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS_0:-}" || -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS:-}" ]]; then
   plugin_read_list_into_result BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS 
 
   tmpdir=$(mktemp -d)
@@ -45,6 +56,7 @@ if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_COMMANDS_0:-}" ]]; then
   run "$file"
 fi
 
+# Parse and run a script
 if [[ -n "${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT:-}" ]]; then
   if [[ ${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT:0:1} == "/" ]]; then
     file=${BUILDKITE_PLUGIN_PRE_HOOK_SCRIPT}

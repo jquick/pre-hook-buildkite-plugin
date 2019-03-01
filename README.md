@@ -22,10 +22,20 @@ steps:
 steps:
   - plugins:
     - jquick/pre-hook#v1.1.0:
+      command: "export MY_ENV=345"
+```
+
+```yml
+steps:
+  - plugins:
+    - jquick/pre-hook#v1.1.0:
       script: .buildkite/scripts/set_env
 ```
 
 ## Configuration
+### `command`
+
+A string to be ran during the prehook.
 
 ### `commands`
 

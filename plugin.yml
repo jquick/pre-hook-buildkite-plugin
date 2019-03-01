@@ -3,6 +3,8 @@ description: Run commands as a pre-hook
 author: https://github.com/jquick
 configuration:
   properties:
+    command:
+      type: string
     commands:
       type: [ string, array ]
     script:
