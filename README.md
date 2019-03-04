@@ -9,7 +9,7 @@ This Plugin runs a set of commands as bash script as a pre-hook. This is useful 
 ```yml
 steps:
   - plugins:
-    - jquick/pre-hook#v1.1.0:
+    - jquick/pre-hook#v1.2.0:
       commands:
         - export MY_ENV=1234
         - |-
@@ -21,14 +21,14 @@ steps:
 ```yml
 steps:
   - plugins:
-    - jquick/pre-hook#v1.1.0:
+    - jquick/pre-hook#v1.2.0:
       command: "export MY_ENV=345"
 ```
 
 ```yml
 steps:
   - plugins:
-    - jquick/pre-hook#v1.1.0:
+    - jquick/pre-hook#v1.2.0:
       script: .buildkite/scripts/set_env
 ```
 
