@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ueo pipefail
+set -uEeo pipefail
 
 function plugin_read_list_into_result() {
   local prefix="$1"
